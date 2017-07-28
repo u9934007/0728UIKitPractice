@@ -30,7 +30,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
         segmentControl.selectedSegmentIndex = 1
 
-        //        segmentControl.addTarget(self, action: "changePicture:", for: UIControlEvents.valueChanged)
+        //        segmentControl.addTarget(self, action: "changeLocation:", for: UIControlEvents.valueChanged)
 
         self.view.addSubview(segmentControl)
 
@@ -44,19 +44,27 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         mapView.frame = CGRect(x: 50, y: 50, width: 300, height: 400)
         mapView.center.x = CGFloat(screenWidth/2)
         mapView.center.y = CGFloat(screenHeight/2)
-        
+
         self.view.addSubview(mapView)
-        setupData()
+        setupData(title:"台北 101", latitude:25.033681, longitude:121.564726)
+        setupData(title:"臨江夜市", latitude:25.030207685924424, longitude:121.55425105092706)
+        setupData(title:"世貿三館", latitude:25.03568611822103, longitude:121.56451985004946)
+        setupData(title:"大安森林公園", latitude:25.032356284593394, longitude:121.53488758316053)
 
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        
         if CLLocationManager.authorizationStatus() == .notDetermined {
+            
             locationManager.requestAlwaysAuthorization()
+        
         } else if CLLocationManager.authorizationStatus() == .denied {
-            let alertController = UIAlertController(title: "Location services were previously denied. Please enable location services for this app in Settings.",
+            
+            
+            let alertController = UIAlertController(title: "Location services were previously denied.",
                                                     message: "",
                                                     preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -68,12 +76,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         }
     }
 
-    func setupData() {
-
+    func setupData(title: String, latitude: Float, longitude: Float) {
+        
+        //檢查系統是否能夠監視 region
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-
-            let title = "Taipei 101"
-            let coordinate = CLLocationCoordinate2DMake(25.033681, 121.564726)
+            
+            let title = title
+            let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
             let regionRadius = 300.0
 
             let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude,
@@ -89,7 +98,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
             let circle = MKCircle(center: coordinate, radius: regionRadius)
             mapView.add(circle)
-        
+
         } else {
             print("System can't track regions")
         }
