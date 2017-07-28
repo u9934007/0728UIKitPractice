@@ -30,7 +30,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
         segmentControl.selectedSegmentIndex = 1
 
-        //        segmentControl.addTarget(self, action: "changeLocation:", for: UIControlEvents.valueChanged)
+        segmentControl.addTarget(self, action: #selector(changeLoction), for: UIControlEvents.valueChanged)
 
         self.view.addSubview(segmentControl)
 
@@ -56,14 +56,12 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        
         if CLLocationManager.authorizationStatus() == .notDetermined {
-            
+
             locationManager.requestAlwaysAuthorization()
-        
+
         } else if CLLocationManager.authorizationStatus() == .denied {
-            
-            
+
             let alertController = UIAlertController(title: "Location services were previously denied.",
                                                     message: "",
                                                     preferredStyle: .alert)
@@ -77,39 +75,74 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
 
     func setupData(title: String, latitude: Float, longitude: Float) {
-        
+
         //檢查系統是否能夠監視 region
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-            
+
             let title = title
             let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
             let regionRadius = 300.0
-
             let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: coordinate.latitude,
                                                                          longitude: coordinate.longitude),
                                           radius: regionRadius,
                                           identifier: title)
             locationManager.startMonitoring(for: region)
 
+            //創建大頭釘
             let locationAnnotation = MKPointAnnotation()
             locationAnnotation.coordinate = coordinate
             locationAnnotation.title = "\(title)"
             mapView.addAnnotation(locationAnnotation)
 
+            //在Region上畫圈圈
             let circle = MKCircle(center: coordinate, radius: regionRadius)
             mapView.add(circle)
 
         } else {
+
             print("System can't track regions")
+
         }
 
     }
 
+    //繪製圓圈
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+
         let circleRenderer = MKCircleRenderer(overlay: overlay)
         circleRenderer.strokeColor = UIColor.red
         circleRenderer.lineWidth = 1.0
         return circleRenderer
+
+    }
+
+    func changeLoction(sender: UISegmentedControl) {
+
+        switch sender.selectedSegmentIndex {
+
+        case 0:
+            let noLocation = CLLocationCoordinate2DMake(25.033681, 121.564726)
+
+            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            mapView.setRegion(viewRegion, animated: false)
+
+        case 1:
+            let noLocation = CLLocationCoordinate2DMake(25.030207685924424, 121.55425105092706)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            mapView.setRegion(viewRegion, animated: false)
+
+        case 2:
+            let noLocation = CLLocationCoordinate2DMake(25.03568611822103, 121.56451985004946)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            mapView.setRegion(viewRegion, animated: false)
+
+        default:
+            let noLocation = CLLocationCoordinate2DMake(25.032356284593394, 121.53488758316053)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            mapView.setRegion(viewRegion, animated: false)
+
+        }
+
     }
 
 }
