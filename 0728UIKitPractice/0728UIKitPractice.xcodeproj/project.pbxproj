@@ -9,18 +9,14 @@
 /* Begin PBXBuildFile section */
 		B2B0137F1F2AC881000BDB8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0137E1F2AC881000BDB8D /* AppDelegate.swift */; };
 		B2B013811F2AC881000BDB8D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B013801F2AC881000BDB8D /* ViewController.swift */; };
-		B2B013841F2AC881000BDB8D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B013821F2AC881000BDB8D /* Main.storyboard */; };
 		B2B013861F2AC881000BDB8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2B013851F2AC881000BDB8D /* Assets.xcassets */; };
-		B2B013891F2AC881000BDB8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B013871F2AC881000BDB8D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B2B0137B1F2AC881000BDB8D /* 0728UIKitPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 0728UIKitPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B0137E1F2AC881000BDB8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2B013801F2AC881000BDB8D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B2B013831F2AC881000BDB8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2B013851F2AC881000BDB8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B2B013881F2AC881000BDB8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2B0138A1F2AC881000BDB8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,9 +52,7 @@
 			children = (
 				B2B0137E1F2AC881000BDB8D /* AppDelegate.swift */,
 				B2B013801F2AC881000BDB8D /* ViewController.swift */,
-				B2B013821F2AC881000BDB8D /* Main.storyboard */,
 				B2B013851F2AC881000BDB8D /* Assets.xcassets */,
-				B2B013871F2AC881000BDB8D /* LaunchScreen.storyboard */,
 				B2B0138A1F2AC881000BDB8D /* Info.plist */,
 			);
 			path = 0728UIKitPractice;
@@ -74,6 +68,7 @@
 				B2B013771F2AC881000BDB8D /* Sources */,
 				B2B013781F2AC881000BDB8D /* Frameworks */,
 				B2B013791F2AC881000BDB8D /* Resources */,
+				B2B013901F2AC9AD000BDB8D /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -123,13 +118,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B013891F2AC881000BDB8D /* LaunchScreen.storyboard in Resources */,
 				B2B013861F2AC881000BDB8D /* Assets.xcassets in Resources */,
-				B2B013841F2AC881000BDB8D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2B013901F2AC9AD000BDB8D /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B2B013771F2AC881000BDB8D /* Sources */ = {
@@ -142,25 +152,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		B2B013821F2AC881000BDB8D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2B013831F2AC881000BDB8D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B2B013871F2AC881000BDB8D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2B013881F2AC881000BDB8D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B2B0138B1F2AC881000BDB8D /* Debug */ = {
