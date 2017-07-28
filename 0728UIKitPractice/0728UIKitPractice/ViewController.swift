@@ -13,8 +13,9 @@ import CoreLocation
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
-    let segmentControl = UISegmentedControl(items: [ "Taipei 101", "2", "3", "4"])
+    let segmentControl = UISegmentedControl(items: [ "我的位置", "台北101", "臨江夜市", "世貿三館", "大安公園"])
     var mapView = MKMapView()
+    var myLocation = CLLocationCoordinate2D()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         segmentControl.frame = CGRect(x: 50, y: 50, width: 300, height: 30)
         segmentControl.center.x = CGFloat(screenWidth/2)
         segmentControl.center.y = CGFloat(screenHeight/6)
-
-        segmentControl.selectedSegmentIndex = 1
+        segmentControl.selectedSegmentIndex = 0
 
         segmentControl.addTarget(self, action: #selector(changeLoction), for: UIControlEvents.valueChanged)
 
@@ -72,6 +72,16 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         } else if CLLocationManager.authorizationStatus() == .authorizedAlways {
             locationManager.startUpdatingLocation()
         }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        guard let location = locations.last else {return}
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        myLocation = center
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
+        self.mapView.setRegion(region, animated: true)
     }
 
     func setupData(title: String, latitude: Float, longitude: Float) {
@@ -121,22 +131,30 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         switch sender.selectedSegmentIndex {
 
         case 0:
-            let noLocation = CLLocationCoordinate2DMake(25.033681, 121.564726)
 
-            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(myLocation, 200, 200)
             mapView.setRegion(viewRegion, animated: false)
 
         case 1:
-            let noLocation = CLLocationCoordinate2DMake(25.030207685924424, 121.55425105092706)
+
+            let noLocation = CLLocationCoordinate2DMake(25.033681, 121.564726)
             let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
             mapView.setRegion(viewRegion, animated: false)
 
         case 2:
+
+            let noLocation = CLLocationCoordinate2DMake(25.030207685924424, 121.55425105092706)
+            let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
+            mapView.setRegion(viewRegion, animated: false)
+
+        case 3:
+
             let noLocation = CLLocationCoordinate2DMake(25.03568611822103, 121.56451985004946)
             let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
             mapView.setRegion(viewRegion, animated: false)
 
         default:
+
             let noLocation = CLLocationCoordinate2DMake(25.032356284593394, 121.53488758316053)
             let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
             mapView.setRegion(viewRegion, animated: false)
